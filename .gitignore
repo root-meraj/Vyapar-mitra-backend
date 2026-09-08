@@ -1,0 +1,43 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Secrets
+.env
+.env.*
+!.env.example
+.gitconfig
+
+# ML model weights — 267 MB, over GitHub's limit. Not needed to run the API
+# (the expense classifier is optional and degrades gracefully). Host on
+# Hugging Face / Git LFS if you actually want it.
+model.safetensors
+*.safetensors
+*.pt
+*.pth
+label_encoder.pkl
+*.pkl
+config.json
+tokenizer.json
+tokenizer_config.json
+
+# One-off ML dev scripts (not part of the API)
+check_models.py
+inspect_labels.py
+test_accuracy.py
+test_quota.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Logs
+*.log

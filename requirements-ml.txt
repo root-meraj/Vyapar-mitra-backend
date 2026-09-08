@@ -1,0 +1,7 @@
+# Optional — the DistilBERT expense classifier for /api/upload-expenses.
+# Install on top of requirements.txt:  pip install -r requirements-ml.txt
+# Also needs model.safetensors + label_encoder.pkl + config.json + tokenizer*.json in backend/
+torch==2.5.1
+transformers==4.47.1
+safetensors==0.5.3
+scikit-learn==1.8.0

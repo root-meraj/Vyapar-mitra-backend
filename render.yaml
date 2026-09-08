@@ -1,0 +1,22 @@
+# Render blueprint for this backend repo (repo root = the FastAPI app).
+# Render → New + → Blueprint → pick this repo. Then open the created service →
+# Environment → add OPENROUTER_API_KEY (it's sync:false, so NOT read from here).
+services:
+  - type: web
+    name: vyapar-mitra-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: google/gemini-2.5-flash
+      - key: OPENROUTER_FREE_MODEL
+        value: google/gemini-2.0-flash-exp:free
+      - key: OPENROUTER_TITLE
+        value: Vyapar-Mitra
