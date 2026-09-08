@@ -61,6 +61,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"service": "Vyapar-Mitra API", "status": "ok", "docs": "/api/health"}
+
 @app.get("/api/health")
 async def health_check():
     import datetime
@@ -778,12 +782,14 @@ async def generate_pdf(payload: PdfRequestPayload):
 @app.on_event("startup")
 async def validate_ai_config_on_startup():
     """Validate AI provider configuration at boot — never print secrets."""
-    key = os.getenv("OPENROUTER_API_KEY")
-    model = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash")
-    if not key or len(key.strip()) < 10:
-        print("[startup] AI provider: NOT CONFIGURED (OPENROUTER_API_KEY missing)")
+    gkey = (os.getenv("GEMINI_API_KEY") or "").strip()
+    okey = (os.getenv("OPENROUTER_API_KEY") or "").strip()
+    if len(gkey) > 10:
+        print(f"[startup] AI provider: gemini (model={os.getenv('GEMINI_MODEL', 'gemini-2.5-flash')}, key_len={len(gkey)})")
+    elif len(okey) > 10:
+        print(f"[startup] AI provider: openrouter (model={os.getenv('OPENROUTER_MODEL', 'google/gemini-2.5-flash')}, key_len={len(okey)})")
     else:
-        print(f"[startup] AI provider: openrouter configured (model={model}, key_len={len(key.strip())})")
+        print("[startup] AI provider: NOT CONFIGURED (set GEMINI_API_KEY or OPENROUTER_API_KEY)")
     maps = (os.getenv("GOOGLE_MAPS_API_KEY") or "").strip()
     print(f"[startup] Maps/Places: {'configured' if maps else 'not configured — using OSM Overpass'}")
     print("[startup] Jobs provider: not configured — business signals only")
