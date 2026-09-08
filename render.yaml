@@ -12,11 +12,14 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.9"
+      # Set ONE AI key in the Render dashboard (Gemini is used if present, else OpenRouter):
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
       - key: OPENROUTER_API_KEY
         sync: false
       - key: OPENROUTER_MODEL
         value: google/gemini-2.5-flash
-      - key: OPENROUTER_FREE_MODEL
-        value: google/gemini-2.0-flash-exp:free
       - key: OPENROUTER_TITLE
         value: Vyapar-Mitra

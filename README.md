@@ -18,14 +18,17 @@ Check: `http://127.0.0.1:8000/api/health` → `{"status":"ok"}`
 
 ## Environment
 
-| var | required | notes |
-|---|---|---|
-| `OPENROUTER_API_KEY` | **yes** for AI features | https://openrouter.ai/keys |
-| `OPENROUTER_MODEL` | no | default `google/gemini-2.5-flash` |
-| `OPENROUTER_FREE_MODEL` | no | rate-limit fallback |
-| `GOOGLE_MAPS_API_KEY` | no | Google Places; falls back to OpenStreetMap |
+Set **one** AI key. `ai_client.py` uses Gemini if `GEMINI_API_KEY` is present, otherwise OpenRouter.
 
-All LLM calls route through OpenRouter via `ai_client.py`.
+| var | notes |
+|---|---|
+| `GEMINI_API_KEY` | direct Google Gemini — https://aistudio.google.com/apikey |
+| `GEMINI_MODEL` | optional, default `gemini-2.5-flash` |
+| `OPENROUTER_API_KEY` | alternative — https://openrouter.ai/keys |
+| `OPENROUTER_MODEL` | optional, default `google/gemini-2.5-flash` |
+| `GOOGLE_MAPS_API_KEY` | optional — Google Places; falls back to OpenStreetMap |
+
+All LLM calls go through `ai_client.py` (plain `requests`, no vendor SDK).
 
 ## Deploy → Render
 
